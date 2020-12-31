@@ -29,7 +29,7 @@ public class main {
 		try {
 			
 			Refeicao refeicao = criarRefeicao("Lasanha", "Lasanha 4 queijos");
-			System.out.println("Bebida - " + refeicao.getNomeRefeicao());
+			System.out.println("Refeicao - " + refeicao.getNomeRefeicao());
 			
 			
 			Bebida bebida = criarBebida("Coca cola", "Coca cola 500ml");
