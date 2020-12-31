@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="cardapioDigital">
+	
+	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!--  -->
+		<class>br.com.fiap.entity.Produto</class>
+		<class>br.com.fiap.entity.Pedido</class>
+		<class>br.com.fiap.entity.Refeicao</class>
+		<class>br.com.fiap.entity.Bebida</class>
+		<class>br.com.fiap.entity.Sobremesa</class>
+		
+		
+	    <properties>
+	   	
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fiap?useTimezone=true&amp;serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="Mt@28121989" />
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			
+
+		</properties>
+	</persistence-unit>
+</persistence>
