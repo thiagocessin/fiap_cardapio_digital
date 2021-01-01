@@ -10,55 +10,50 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
 @Entity
 @Table(name = "tb_produto")
 public class Produto {
-	
+
 	@Id
-	@SequenceGenerator(name="produto", sequenceName = "sq_tb_produto", allocationSize = 1)
+	@SequenceGenerator(name = "produto", sequenceName = "sq_tb_produto", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name="id_produto")
+	@Column(name = "id_produto")
 	private int id;
-	
+
 	@Column(name = "nm_produto", nullable = false, length = 100)
 	private String nome;
-	
-	@Column(name="vl_preco")
+
+	@Column(name = "vl_preco",scale = 2, precision = 0)
 	private double preco;
-	
+
 	@Column(name = "ds_descricao", nullable = false, length = 100)
 	private String descricao;
-	
-	
+
 	@Column(name = "qt_quantidade", nullable = false, length = 100)
 	private int quantidade;
-	
-	
-	@Formula("vl_preco*quantidade")
+
+	//@Formula(value = "vl_preco*qt_quantidade")
+	@Transient
 	private double precoTotal;
-	
-	
+
 	@ManyToMany(mappedBy = "produtos")
 	private List<Pedido> pedidos;
-	
+
 	public Produto() {
 		super();
 	}
-	
 
-	public Produto(String nome, double preco, String descricao, int quantidade, double precoTotal) {
+	public Produto(String nome, double preco, String descricao, int quantidade) {
 		super();
 		this.nome = nome;
 		this.preco = preco;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
-		this.precoTotal = precoTotal;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -101,18 +96,19 @@ public class Produto {
 	}
 
 	public double getPrecoTotal() {
-		return precoTotal;
+		return preco*quantidade;
 	}
 
 	public void setPrecoTotal(double precoTotal) {
 		this.precoTotal = precoTotal;
 	}
-	
-	
-	
 
-	
-	
-	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 }

@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,37 +23,43 @@ import javax.persistence.TemporalType;
 public class Pedido {
 
 	@Id
-	@SequenceGenerator(name="pedido", sequenceName = "sq_tb_pedido", allocationSize = 1)
+	@SequenceGenerator(name = "pedido", sequenceName = "sq_tb_pedido", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name="ip_pedido")
+	@Column(name = "id_pedido")
 	private int id;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="dt_pedido")
+	@Column(name = "dt_pedido")
 	private Calendar dataHoraPedido;
-	
+
 	@Column(name = "ds_status", nullable = false, length = 100)
 	private String status;
-	
+
 	@Column(name = "ds_detalhes")
 	private String detalhes;
-	
+
 	@Column(name = "nm_mesa", nullable = false, length = 100)
 	private String mesa;
-	
+
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(joinColumns = @JoinColumn(name="ip_pedido"),
-				inverseJoinColumns = @JoinColumn(name="id_produto"),
-				name="tb_pedido_produto")
-	private List<Produto> produtos; 
-	
+	@JoinTable(joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_produto"), name = "tb_pedido_produto")
+	private List<Produto> produtos;
+
 	@ManyToOne
-	@JoinColumn(name="id_cliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
 
 	public Pedido() {
 		super();
+	}
+
+	public Pedido(Calendar dataHoraPedido, String status, String detalhes, String mesa, Cliente cliente) {
+		super();
+		this.dataHoraPedido = dataHoraPedido;
+		this.status = status;
+		this.detalhes = detalhes;
+		this.mesa = mesa;
+		this.cliente = cliente;
 	}
 
 	public int getId() {
@@ -97,6 +102,20 @@ public class Pedido {
 		this.mesa = mesa;
 	}
 
-	
-	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 }

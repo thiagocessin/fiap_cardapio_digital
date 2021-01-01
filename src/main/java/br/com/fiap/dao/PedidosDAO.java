@@ -14,7 +14,7 @@ public class PedidosDAO extends GenericDAO<Pedido, Integer>{
 	
 	/*
 	public Pedido buscarPorNome(String nome) {
-		return em.createQuery("from Pedido p where nomeRefeicao = :nome", Refeicao.class)
+		return em.createQuery("from Pedido p where n = :nome", Refeicao.class)
 				.setParameter("nome", nome).getSingleResult();
 	}
 	*/
