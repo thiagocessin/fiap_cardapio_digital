@@ -1,9 +1,9 @@
 package br.com.fiap.test;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Random;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,8 +31,8 @@ public class main {
 
 		try {
 			
-			for (int i = 0; i < 10; i++) criarProduto();
-			for (int i = 0; i < 10; i++) criarCliente();
+			//criarProdutos();
+			//criarClientes();
 			
 			criarPedido();
 
@@ -54,38 +54,44 @@ public class main {
 		GregorianCalendar dataHoraPedido = new GregorianCalendar(2017, Calendar.DECEMBER, 10, 23, 0);
 
 		Pedido pedido = new Pedido(dataHoraPedido, "em andamento", "Detalhes do pedido", "mesa 1",
-				clientesDao.buscar(11));
-		pedido.setProdutos(produtosDao.listar());
+				clientesDao.buscarPorNome("Rebeca"));
+		
+		List<Produto> listaProd = new ArrayList<Produto>();
+		listaProd.add(produtosDao.buscar(1));
+		listaProd.add(produtosDao.buscar(1));
+		listaProd.add(produtosDao.buscar(3));
+		listaProd.add(produtosDao.buscar(4));
+		
+		pedido.setProdutos(listaProd);
 
 		pedidosDAO.cadastrar(pedido);
 		pedidosDAO.commit();
 	}
 
-	public static void criarProduto() throws Exception {
+	public static void criarProdutos() throws Exception {
 
 		ProdutosDAO dao = new ProdutosDAO(em);
-
 		String[] produtos = { "Spaguetti", "Lasanha", "Gnocchi", "Pizza" };
 
-		String nome = produtos[new Random().nextInt(4)];
-		String format = new DecimalFormat("#.##").format(new Random().nextDouble() * 100);
+		
+		for(String s : produtos) {
+			Produto p = new Produto(s,10.00,"Descricao - "+ s);
+			dao.cadastrar(p);
+		}
 
-		Produto produto = new Produto(nome, Double.valueOf(format.replace(",", ".")), "Descricao produto",
-				new Random().nextInt((10 - 1) + 1) + 1);
-
-		dao.cadastrar(produto);
 		dao.commit();
 
 	}
 
-	public static void criarCliente() throws Exception {
+	public static void criarClientes() throws Exception {
 		ClientesDAO dao = new ClientesDAO(em);
 
 		String[] clientes = { "José", "Maria", "Julia", "Rebeca" };
 
-		Cliente cliente = new Cliente(clientes[new Random().nextInt(4)]);
-
-		dao.cadastrar(cliente);
+		for(String s : clientes) {
+			Cliente cliente = new Cliente(s);
+			dao.cadastrar(cliente);
+		}
 		dao.commit();
 	}
 

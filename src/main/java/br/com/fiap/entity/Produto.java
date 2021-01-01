@@ -33,9 +33,7 @@ public class Produto {
 	@Column(name = "ds_descricao", nullable = false, length = 100)
 	private String descricao;
 
-	@Column(name = "qt_quantidade", nullable = false, length = 100)
-	private int quantidade;
-
+	
 	//@Formula(value = "vl_preco*qt_quantidade")
 	@Transient
 	private double precoTotal;
@@ -47,12 +45,11 @@ public class Produto {
 		super();
 	}
 
-	public Produto(String nome, double preco, String descricao, int quantidade) {
+	public Produto(String nome, double preco, String descricao) {
 		super();
 		this.nome = nome;
 		this.preco = preco;
 		this.descricao = descricao;
-		this.quantidade = quantidade;
 	}
 
 	public int getId() {
@@ -87,16 +84,8 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public double getPrecoTotal() {
-		return preco*quantidade;
+		public double getPrecoTotal() {
+		return precoTotal;
 	}
 
 	public void setPrecoTotal(double precoTotal) {
