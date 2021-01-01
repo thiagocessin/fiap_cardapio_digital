@@ -3,12 +3,17 @@ package br.com.fiap.entity;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,31 +42,19 @@ public class Pedido {
 	@Column(name = "nm_mesa", nullable = false, length = 100)
 	private String mesa;
 	
-	@OneToMany(mappedBy = "pedido")
-	private List<Refeicao> refeicoes;
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(joinColumns = @JoinColumn(name="ip_pedido"),
+				inverseJoinColumns = @JoinColumn(name="id_produto"),
+				name="tb_pedido_produto")
+	private List<Produto> produtos; 
 	
-	@OneToMany(mappedBy = "pedido")
-	private List<Bebida> bebidas;
-	
-	@OneToMany(mappedBy = "pedido")
-	private List<Sobremesa> sobremesas;
+	@ManyToOne
+	@JoinColumn(name="id_cliente")
+	private Cliente cliente;
 	
 
 	public Pedido() {
 		super();
-	}
-
-	public Pedido(int id, Calendar dataHoraPedido, String status, String detalhes, String mesa,
-			List<Refeicao> refeicoes, List<Bebida> bebidas, List<Sobremesa> sobremesas) {
-		super();
-		this.id = id;
-		this.dataHoraPedido = dataHoraPedido;
-		this.status = status;
-		this.detalhes = detalhes;
-		this.mesa = mesa;
-		this.refeicoes = refeicoes;
-		this.bebidas = bebidas;
-		this.sobremesas = sobremesas;
 	}
 
 	public int getId() {
@@ -104,35 +97,6 @@ public class Pedido {
 		this.mesa = mesa;
 	}
 
-	public List<Refeicao> getRefeicoes() {
-		return refeicoes;
-	}
-
-	public void setRefeicoes(List<Refeicao> refeicoes) {
-		this.refeicoes = refeicoes;
-	}
-
-	public List<Bebida> getBebidas() {
-		return bebidas;
-	}
-
-	public void setBebidas(List<Bebida> bebidas) {
-		this.bebidas = bebidas;
-	}
-
-	public List<Sobremesa> getSobremesas() {
-		return sobremesas;
-	}
-
-	public void setSobremesas(List<Sobremesa> sobremesas) {
-		this.sobremesas = sobremesas;
-	}
-	
-	
-	
-	
-	
-	
 	
 	
 }
